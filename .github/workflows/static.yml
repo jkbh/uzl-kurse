@@ -39,11 +39,13 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          sudo apt install -y just
-      - name: Reset DB and Scrape
+          sudo apt install -y sqlite3
+      - name: Reset database
         run: |
-          just reset_db
-          just scrape
+          rm test.db
+          sqlite3 test.db < schema.sql
+      - name: Scrape into db 
+        run: python3 src/main.py 
       - name: Copy scraped db into web folder
         run: cp -f test.db web/assets/test.db
       - name: Setup Pages
