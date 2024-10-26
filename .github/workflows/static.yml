@@ -41,6 +41,7 @@ jobs:
           pip install -r requirements.txt
           sudo apt install -y just
       - name: Reset DB and Scrape
+        run: |
           just reset_db
           just scrape
       - name: Copy scraped db into web folder
