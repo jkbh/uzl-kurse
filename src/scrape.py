@@ -30,8 +30,7 @@ class Course:
     parts: list[str]
 
 
-def scrape_index(session: CachedSession):
-    content = session.get(START_URL).content
+def scrape_index(content):
     parsed = html.fromstring(content)
     parsed.make_links_absolute("www.uni-luebeck.de")
 
@@ -41,11 +40,7 @@ def scrape_index(session: CachedSession):
         yield element.get("href")
 
 
-def scrape_course(session: CachedSession, link):
-    logger.info(f"scraping {link}")
-    response = session.get(link)
-    content = response.content
-
+def scrape_course(content, url):
     parsed = html.fromstring(content)
     data_container = parsed.cssselect("div.mainarticles")[0]
 
@@ -76,9 +71,18 @@ def scrape_course(session: CachedSession, link):
     part_matches = [ID_REGEX.search(text) for text in part_texts]
     part_ids = [match.group().strip() for match in part_matches if match]
 
-    return Course(link, id, name, duration, turnus, points, studies, part_ids)
+    return Course(url, id, name, duration, turnus, points, studies, part_ids)
 
 
 def scrape_courses():
     session = CachedSession()
-    return [scrape_course(session, url) for url in scrape_index(session)]
+    res = session.get(START_URL)
+    urls = scrape_index(res.content)
+    courses = []
+    for url in urls:
+        res = session.get(url)
+        logger.debug(f"scraping {url}")
+        course = scrape_course(res.content, url)
+        logger.debug("scraping done")
+        courses.append(course)
+    return courses

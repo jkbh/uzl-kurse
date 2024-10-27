@@ -11,8 +11,8 @@ CREATE TABLE IF NOT EXISTS course (
 
 CREATE TABLE IF NOT EXISTS course_has_subcourses (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  course_id INTEGER,
-  subcourse_id INTEGER,
+  course_id INTEGER NOT NULL,
+  subcourse_id INTEGER NOT NULL,
   FOREIGN KEY (course_id) REFERENCES module (id),
   FOREIGN KEY (subcourse_id) REFERENCES module (id)
 );
@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS major (
 
 CREATE TABLE IF NOT EXISTS major_has_course (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  major_id INTEGER,
-  course_id INTEGER,
+  major_id INTEGER NOT NULL,
+  course_id INTEGER NOT NULL,
   category TEXT,
   area TEXT,
   semester TEXT,

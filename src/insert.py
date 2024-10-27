@@ -6,7 +6,6 @@ logger = logging.getLogger(__name__)
 
 
 def insert_majors(majors, cur):
-    logger.debug(f"inserting majors {majors}")
     matches = [re.search(r"\d{4}", name) for name in majors]
     years = [match.group() if match else None for match in matches]
 
@@ -18,13 +17,13 @@ def insert_majors(majors, cur):
             """,
             [row for row in zip(majors, years)],
         )
-    except sqlite3.IntegrityError as e:
-        logger.warning(e)
+    except sqlite3.IntegrityError:
+        pass
 
 
 def insert_courses(courses, cur):
     for course in courses:
-        logger.debug(f"inserting course {course.name}")
+        logger.debug(f"inserting {course.name} into db")
         try:
             cur.execute(
                 """
@@ -40,8 +39,9 @@ def insert_courses(courses, cur):
                     course.points,
                 ],
             )
+            logger.debug("done")
         except sqlite3.IntegrityError as e:
-            logger.warning(e)
+            logger.error(e)
 
 
 def insert_major_has_course(courses, cur):
