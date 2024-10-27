@@ -37,14 +37,12 @@ jobs:
         run: |
           pip install -r requirements.txt
           sudo apt install -y sqlite3
-      - name: Reset database
-        run: |
-          rm test.db
-          sqlite3 test.db < schema.sql
-      - name: Scrape into db 
+      - name: Init database
+        run: sqlite3 courses.sqlite < schema.sql
+      - name: Scrape into database 
         run: python3 src/main.py 
-      - name: Copy scraped db into web folder
-        run: cp -f test.db web/assets/test.db
+      - name: Copy database into web assets folder
+        run: cp -f courses.sqlite web/assets/
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
