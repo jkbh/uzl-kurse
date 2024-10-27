@@ -5,5 +5,5 @@ debug:
 serve:
 	python3 -m http.server -d web
 reset_db:
-	rm test.db
-	sqlite3 test.db < schema.sql
+	rm courses.sqlite 
+	sqlite3 courses.sqlite < schema.sql

@@ -60,7 +60,7 @@ def insert_major_has_course(courses, cur):
 
 
 def insert_all(courses):
-    conn = sqlite3.connect("test.db")
+    conn = sqlite3.connect("courses.sqlite")
     cur = conn.cursor()
 
     majors = set([s.major for c in courses for s in c.studies])

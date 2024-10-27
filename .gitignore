@@ -1,5 +1,5 @@
-test.db
 http_cache.sqlite
+courses.sqlite
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

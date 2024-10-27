@@ -5,7 +5,7 @@ config = {
 // We must specify this locateFile function if we are loading a wasm file from anywhere other than the current html page's folder.
 initSqlJs(config).then(function(SQL) {
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', 'assets/test.db', true);
+	xhr.open('GET', 'assets/courses.sqlite', true);
 	xhr.responseType = 'arraybuffer';
 
 	xhr.onload = function(e) {
