@@ -19,6 +19,13 @@
 	tr {
 		border-bottom: 1px solid #ddd;
 	}
+
+	.linkIcon {
+		width: 25px;
+		height: 25px;
+		position: relative;
+		bottom: -5px;
+	}
 </style>
 
 <body>
@@ -28,21 +35,40 @@
 	<!-- 	<option value="-1">Keine Filterung</option> -->
 	<!-- </select> -->
 	<table id="mainTable">
-		<tr class="header">
-			<th>Kursnummer</th>
-			<th>Name</th>
-			<th>Dauer</th>
-			<th>Turnus</th>
-			<th>ECTS</th>
-		</tr>
-		<tr>
-			<td><input id="numberInput" type="text" onkeyup="filterColumn('numberInput', 0)" /></td>
-			<td><input id="nameInput" type="text" onkeyup="filterColumn('nameInput', 1)" /></td>
-			<td>Dauer</td>
-			<td><input id="turnusInput" type="text" onkeyup="filterColumn('turnusInput', 3)" /></td>
-			<td>ECTS</td>
-		</tr>
+		<thead>
+			<tr class="header">
+				<th>Kursnummer</th>
+				<th>Name</th>
+				<th>Dauer</th>
+				<th>Turnus</th>
+				<th>ECTS</th>
+			</tr>
+			<tr>
+				<td><input id="numberInput" type="text" onkeyup="filterColumn('numberInput', 0)" /></td>
+				<td><input id="nameInput" type="text" onkeyup="filterColumn('nameInput', 1)" /></td>
+				<td>Dauer</td>
+				<td><input id="turnusInput" type="text" onkeyup="filterColumn('turnusInput', 3)" /></td>
+				<td>ECTS</td>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
 	</table>
+	<template id="courserow">
+		<tr>
+			<td>number</td>
+			<td>
+				<a class="nameText">name</a>
+				<a class="uzlLink"><img class="linkIcon" src="https://www.uni-luebeck.de/favicon.ico"
+						alt="modulhandbuch" /></a>
+				<a class="univisLink"><img class="linkIcon"
+						src="https://univis.uni-luebeck.de/favicon.ico" alt="univis" /></a>
+			</td>
+			<td>duration</td>
+			<td>turnus</td>
+			<td>points</td>
+		</tr>
+	</template>
 </body>
 
 </html>
