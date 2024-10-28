@@ -40,8 +40,8 @@ def insert_courses(courses, cur):
                 ],
             )
             logger.debug("done")
-        except sqlite3.IntegrityError as e:
-            logger.error(e)
+        except sqlite3.IntegrityError:
+            pass
 
 
 def insert_major_has_course(courses, cur):
@@ -53,10 +53,13 @@ def insert_major_has_course(courses, cur):
             (major_id,) = cur.execute(
                 "SELECT id FROM major WHERE name=?", [study.major]
             ).fetchone()
-            cur.execute(
-                "INSERT INTO major_has_course (major_id, course_id, category, area, semester) VALUES (?,?,?,?,?)",
-                [major_id, course_id, study.category, study.area, study.semester],
-            )
+            try:
+                cur.execute(
+                    "INSERT INTO major_has_course (major_id, course_id, category, area, semester) VALUES (?,?,?,?,?)",
+                    [major_id, course_id, study.category, study.area, study.semester],
+                )
+            except sqlite3.IntegrityError:
+                pass
 
 
 def insert_all(courses):

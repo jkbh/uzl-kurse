@@ -33,5 +33,6 @@ CREATE TABLE IF NOT EXISTS major_has_course (
   area TEXT,
   semester TEXT,
   FOREIGN KEY (major_id) REFERENCES major (id),
-  FOREIGN KEY (course_id) REFERENCES course (id)
+  FOREIGN KEY (course_id) REFERENCES course (id),
+  CONSTRAINT not_all_equal UNIQUE (major_id, course_id, category, area, semester)
 )

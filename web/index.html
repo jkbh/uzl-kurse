@@ -1,53 +1,72 @@
-<meta charset="utf8" />
-<html>
-<script src='assets/sql-wasm.js'></script>
-<script src='assets/uzl-kurse.js'></script>
-<style>
-	#mainTable {
-		border-collapse: collapse;
-		width: 100%;
-		border: 1px solid #ddd;
-		font-size: 18px;
-	}
+<!doctype html>
 
-	th,
-	td {
-		text-align: left;
-		padding: 12px;
-	}
+<head>
+	<link rel="icon" href="assets/building-columns-solid.svg" />
+	<title>UzL-Kurse</title>
+	<meta charset="utf8" />
+	<html>
+	<script src='assets/sql-wasm.js'></script>
+	<script src='assets/uzl-kurse.js'></script>
+	<style>
+		#mainTable {
+			border-collapse: collapse;
+			width: 100%;
+			border: 1px solid #ddd;
+			font-size: 18px;
+		}
 
-	tr {
-		border-bottom: 1px solid #ddd;
-	}
+		th,
+		td {
+			text-align: left;
+			padding: 12px;
+		}
 
-	.linkIcon {
-		width: 25px;
-		height: 25px;
-		position: relative;
-		bottom: -5px;
-	}
-</style>
+		tr {
+			border-bottom: 1px solid #ddd;
+		}
+
+		.linkIcon {
+			width: 25px;
+			height: 25px;
+			position: relative;
+			bottom: -5px;
+		}
+	</style>
+</head>
 
 <body>
 	<h1>Kurse der Universtät zu Lübeck</h1>
-	<!-- <label for="majors">Wähle deinen Studiengang: </label> -->
-	<!-- <select name="majors" id="majors"> -->
-	<!-- 	<option value="-1">Keine Filterung</option> -->
-	<!-- </select> -->
+	<h3>Weil es einfach keine gute Suche mit Filtern gibt &#128128;</h3>
+	<h3>&#128680; Nicht für Mobile Nutzer optimiert, keine Lust &#128680;</h3>
+	<label for="majors">Wähle deinen Studiengang: </label>
+	<select name="majors" id="majorSelect" placeholder="Bitte auswählen" onchange="reloadCourses(this.value)">
+		<option disabled selected>Bitte auswählen</option>
+	</select>
+	<template id="majorOptionTemplate">
+		<option>Studiengang</option>
+	</template>
 	<table id="mainTable">
 		<thead>
 			<tr class="header">
 				<th>Kursnummer</th>
 				<th>Name</th>
-				<th>Dauer</th>
+				<th>Kategorie</th>
+				<th>Fachgebiet</th>
+				<th>Semester</th>
 				<th>Turnus</th>
+				<th>Dauer</th>
 				<th>ECTS</th>
 			</tr>
 			<tr>
 				<td><input id="numberInput" type="text" onkeyup="filterColumn('numberInput', 0)" /></td>
 				<td><input id="nameInput" type="text" onkeyup="filterColumn('nameInput', 1)" /></td>
+				<td><input id="categoryInput" type="text" onkeyup="filterColumn('categoryInput', 2)" />
+				</td>
+				<td><input id="areaInput" type="text" onkeyup="filterColumn('areaInput', 3)" /></td>
+				<td><input id="semesterInput" type="text" onkeyup="filterColumn('semesterInput', 4)" />
+				</td>
+				<td><input id="turnusInput" type="text" onkeyup="filterColumn('turnusInput', 5)" /></td>
 				<td>Dauer</td>
-				<td><input id="turnusInput" type="text" onkeyup="filterColumn('turnusInput', 3)" /></td>
 				<td>ECTS</td>
 			</tr>
 		</thead>
@@ -64,9 +83,13 @@
 				<a class="univisLink"><img class="linkIcon"
 						src="https://univis.uni-luebeck.de/favicon.ico" alt="univis" /></a>
 			</td>
-			<td>duration</td>
+			<td>category</td>
+			<td>area</td>
+			<td>semester</td>
 			<td>turnus</td>
+			<td>duration</td>
 			<td>points</td>
+
 		</tr>
 	</template>
 </body>
